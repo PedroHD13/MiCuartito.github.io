@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Cuarto - Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header publish-header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="header-title">
+            <h1>Publicar Cuarto</h1>
+            <p>Completa la información</p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-container">
+        <form id="publish-form">
+            <!-- Fotografías -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">📷</span>
+                    Fotografías del Cuarto
+                </div>
+                <div class="photo-upload-area" onclick="document.getElementById('photo-input').click()">
+                    <div class="photo-upload-icon">📸</div>
+                    <div class="photo-upload-text">
+                        <strong>Toca para agregar fotos</strong><br>
+                        <small>Máximo 6 fotos</small>
+                    </div>
+                </div>
+                <input type="file" id="photo-input" accept="image/*" multiple style="display: none;" onchange="handlePhotos(event)">
+                
+                <div class="photo-grid" id="photo-grid">
+                    <!-- Las fotos se mostrarán aquí -->
+                </div>
+            </div>
+
+            <!-- Tipo de Habitación -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🚪</span>
+                    Tipo de Habitación
+                </div>
+                <div class="options-group">
+                    <label class="option-btn selected" onclick="selectOption(this, 'tipo')">
+                        <input type="radio" name="tipo" value="privada" checked>
+                        Privada
+                    </label>
+                    <label class="option-btn" onclick="selectOption(this, 'tipo')">
+                        <input type="radio" name="tipo" value="compartida">
+                        Compartida
+                    </label>
+                </div>
+            </div>
+
+            <!-- Capacidad -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">👥</span>
+                    Capacidad
+                </div>
+                <div class="input-group">
+                    <label for="capacidad">Número de personas</label>
+                    <select id="capacidad" required>
+                        <option value="">Selecciona</option>
+                        <option value="1">1 persona</option>
+                        <option value="2">2 personas</option>
+                        <option value="3">3 personas</option>
+                        <option value="4">4 personas</option>
+                        <option value="5+">5 o más personas</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Servicios -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">✨</span>
+                    Servicios Incluidos
+                </div>
+                <div class="services-grid">
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="wifi">
+                        <span class="service-label">📶 WiFi</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="agua">
+                        <span class="service-label">💧 Agua</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="luz">
+                        <span class="service-label">💡 Luz</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="gas">
+                        <span class="service-label">🔥 Gas</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="muebles">
+                        <span class="service-label">🛋️ Amoblado</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="cocina">
+                        <span class="service-label">🍳 Cocina</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="lavanderia">
+                        <span class="service-label">🧺 Lavandería</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="servicios" value="parking">
+                        <span class="service-label">🚗 Parking</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Cerca de -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">📍</span>
+                    Cerca de..
+                </div>
+                <div class="services-grid">
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="cercaDe" value="universidad">
+                        <span class="service-label">🏫 Universidad</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="cercaDe" value="transporte">
+                        <span class="service-label">🚌 Transporte público</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="cercaDe" value="mercados">
+                        <span class="service-label">🛒 Mercados/tiendas</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="cercaDe" value="hospital">
+                        <span class="service-label">⚕️ Hospital/centros de salud</span>
+                    </label>
+                    <label class="service-item" onclick="toggleService(this)">
+                        <input type="checkbox" name="cercaDe" value="farmacias">
+                        <span class="service-label">💊 Farmacias</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Precio -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">💰</span>
+                    Precio
+                </div>
+                <div class="input-group">
+                    <label for="precio">Precio mensual</label>
+                    <div class="price-input-wrapper">
+                        <span class="currency-symbol">Bs.</span>
+                        <input type="number" id="precio" placeholder="500" required min="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reglas de la Casa -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">📋</span>
+                    Reglas de la Casa
+                </div>
+                <div class="input-group">
+                    <label for="reglas">Describe las reglas</label>
+                    <textarea id="reglas" placeholder="Ej: No fumar, no mascotas, horario de visitas hasta las 10pm, etc."></textarea>
+                </div>
+            </div>
+
+            <!-- Disponibilidad -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">📅</span>
+                    Disponibilidad
+                </div>
+                <div class="options-group">
+                    <label class="option-btn selected" onclick="selectOption(this, 'disponibilidad')">
+                        <input type="radio" name="disponibilidad" value="inmediata" checked>
+                        Inmediata
+                    </label>
+                    <label class="option-btn" onclick="selectOption(this, 'disponibilidad')">
+                        <input type="radio" name="disponibilidad" value="fecha">
+                        Desde fecha
+                    </label>
+                </div>
+                <div class="input-group" id="fecha-disponibilidad" style="display: none; margin-top: 15px;">
+                    <label for="fecha">Disponible desde</label>
+                    <input type="date" id="fecha">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit-section">
+        <button class="btn-submit" onclick="publicarCuarto()">
+            Publicar Cuarto
+        </button>
+    </div>
+
+    <!-- Bottom Navigation para PROPIETARIO -->
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="goToHome()">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item active">
+            <span class="nav-icon">➕</span>
+            <span class="nav-label">Publicar</span>
+        </button>
+        <button class="nav-item" onclick="goToMyRooms()">
+            <span class="nav-icon">🏘️</span>
+            <span class="nav-label">Mis Cuartos</span>
+        </button>
+        <button class="nav-item" onclick="goToProfile()">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </button>
+    </div>
+
+    <script src="publicar.js"></script>
+</body>
+</html>

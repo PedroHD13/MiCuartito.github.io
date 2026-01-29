@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ============ PANTALLA DE LOGIN ============ -->
+    <div id="login-screen">
+        <div class="login-container">
+            <div class="header">
+                <img src="logo encabezado.png" alt="Micuartito" class="logo">
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">Iniciar Sesión</button>
+                <button class="tab" onclick="switchTab('register')">Registrarse</button>
+            </div>
+
+            <div class="form-container">
+                <!-- Formulario de Login -->
+                <div id="login" class="form-section active">
+                    <form onsubmit="handleLogin(event)">
+                        <div class="input-group">
+                            <label for="login-email">Usuario</label>
+                            <input type="text" id="login-email" placeholder="Ingresa tu usuario" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="login-password">Contraseña</label>
+                            <input type="password" id="login-password" placeholder="••••••••" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Ingresar</button>
+
+                        <div class="demo-info">
+                            <h4>🔐 Usuarios de prueba:</h4>
+                            <p><strong>Propietario:</strong> propietario / propietario123</p>
+                            <p><strong>Inquilino:</strong> inquilino / inquilino123</p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Formulario de Registro -->
+                <div id="register" class="form-section">
+                    <form onsubmit="handleRegister(event)">
+                        <div class="input-group">
+                            <label for="register-name">Nombre Completo</label>
+                            <input type="text" id="register-name" placeholder="Juan Pérez" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="register-email">Correo Electrónico</label>
+                            <input type="email" id="register-email" placeholder="tu@email.com" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="register-password">Contraseña</label>
+                            <input type="password" id="register-password" placeholder="Mínimo 6 caracteres" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+
+                        <div class="demo-info">
+                            <h4>ℹ️ Versión Demo</h4>
+                            <p>El registro está deshabilitado en esta versión demo.</p>
+                            <p>Usa los usuarios de prueba para iniciar sesión.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PANTALLA DE DASHBOARD ============ -->
+    <div id="dashboard-screen">
+        <div class="header">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">P</div>
+                <div class="user-details">
+                    <h2 id="user-name">Usuario</h2>
+                    <span class="user-type-badge" id="user-type-display">👤 Usuario</span>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="cerrarSesion()" title="Cerrar Sesión">
+                <span class="logout-icon">🚪</span>
+                <span class="logout-text">Salir</span>
+            </button>
+        </div>
+
+        <div class="main-content">
+            <!-- SECCIÓN INQUILINO -->
+            <div class="inquilino-section" id="inquilino-section">
+                <h3 class="section-title">Panel de Inquilino</h3>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card primary" onclick="navigateTo('buscar')">
+                        <div class="card-content">
+                            <div class="card-icon">🔍</div>
+                            <div class="card-info">
+                                <div class="card-title">Buscar Cuartos</div>
+                                <div class="card-description">Encuentra tu espacio ideal con filtros</div>
+                                <span class="badge">124 disponibles</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="navigateTo('favoritos')">
+                        <div class="card-content">
+                            <div class="card-icon">❤️</div>
+                            <div class="card-info">
+                                <div class="card-title">Mis Favoritos</div>
+                                <div class="card-description">Cuartos que guardaste para comparar</div>
+                                <span class="badge">3 guardados</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="navigateTo('perfil-inquilino')">
+                        <div class="card-content">
+                            <div class="card-icon">👤</div>
+                            <div class="card-info">
+                                <div class="card-title">Mi Perfil</div>
+                                <div class="card-description">Edita tus datos y ve tus reseñas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN PROPIETARIO -->
+            <div class="propietario-section" id="propietario-section">
+                <h3 class="section-title">Panel de Propietario</h3>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card primary" onclick="navigateTo('publicar')">
+                        <div class="card-content">
+                            <div class="card-icon">➕</div>
+                            <div class="card-info">
+                                <div class="card-title">Publicar Cuarto</div>
+                                <div class="card-description">Crea una nueva publicación</div>
+                                <span class="badge">Acción Principal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="navigateTo('mis-cuartos')">
+                        <div class="card-content">
+                            <div class="card-icon">🏠</div>
+                            <div class="card-info">
+                                <div class="card-title">Mis Cuartos</div>
+                                <div class="card-description">Ver, editar o eliminar publicaciones</div>
+                                <span class="badge">3 activos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="navigateTo('perfil-propietario')">
+                        <div class="card-content">
+                            <div class="card-icon">👤</div>
+                            <div class="card-info">
+                                <div class="card-title">Mi Perfil</div>
+                                <div class="card-description">Edita tu información y calificación</div>
+                                <span class="badge">⭐ 4.5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="navigateTo('ayuda')">
+                        <div class="card-content">
+                            <div class="card-icon">❓</div>
+                            <div class="card-info">
+                                <div class="card-title">Ayuda / Reglas</div>
+                                <div class="card-description">Aprende a publicar y conoce las reglas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegación para INQUILINO -->
+        <div class="bottom-nav inquilino-nav" id="inquilino-nav">
+            <button class="nav-item active" onclick="goToHome()">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Inicio</span>
+            </button>
+            <button class="nav-item" onclick="goToSearch()">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-label">Buscar</span>
+            </button>
+            <button class="nav-item" onclick="goToFavorites()">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Favoritos</span>
+            </button>
+            <button class="nav-item" onclick="goToProfile()">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Perfil</span>
+            </button>
+        </div>
+
+        <!-- Navegación para PROPIETARIO -->
+        <div class="bottom-nav propietario-nav" id="propietario-nav" style="display: none;">
+            <button class="nav-item active" onclick="goToHome()">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Inicio</span>
+            </button>
+            <button class="nav-item" onclick="goToPublish()">
+                <span class="nav-icon">➕</span>
+                <span class="nav-label">Publicar</span>
+            </button>
+            <button class="nav-item" onclick="goToMyRooms()">
+                <span class="nav-icon">🏘️</span>
+                <span class="nav-label">Mis Cuartos</span>
+            </button>
+            <button class="nav-item" onclick="goToProfile()">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Perfil</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
