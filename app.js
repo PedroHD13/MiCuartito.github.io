@@ -105,12 +105,20 @@ function navigateTo(section) {
         window.location.href = 'favoritos.html';
         return;
     }
+    //perfiles
+    if (section === 'perfil-inquilino') {
+        window.location.href = 'perfil-inquilino.html';
+        return;
+    }
+
+    if (section === 'perfil-propietario') {
+        window.location.href = 'perfil-propietario.html';
+        return;
+    }
 
     // Para las demás secciones, mostrar mensaje de próximamente
     const messages = {
         'contactos': 'Próximamente: Contactos recibidos',
-        'perfil-inquilino': 'Próximamente: Tu perfil de inquilino',
-        'perfil-propietario': 'Próximamente: Tu perfil de propietario',
         'ayuda': 'Próximamente: Ayuda y reglas'
     };
     

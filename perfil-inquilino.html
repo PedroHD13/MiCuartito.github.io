@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="perfil-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header perfil-header">
+        <div class="header-top">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="header-title">
+                <h1>Mi Perfil</h1>
+                <p>Gestiona tu información</p>
+            </div>
+            <button class="edit-btn" onclick="toggleEditMode()" id="edit-toggle-btn">
+                ✏️
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Header Card -->
+    <div class="profile-header-card">
+        <div class="profile-avatar-container">
+            <div class="profile-avatar" id="profile-avatar">M</div>
+            <button class="change-avatar-btn" onclick="changeAvatar()">📷</button>
+        </div>
+        <h2 class="profile-name" id="profile-name">María Inquilina</h2>
+        <div class="profile-type-badge inquilino">🔍 Inquilino</div>
+        <div class="profile-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="stat-favorites">0</div>
+                <div class="stat-label">Favoritos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="stat-rating">⭐ 0.0</div>
+                <div class="stat-label">Calificación</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="stat-since">2024</div>
+                <div class="stat-label">Desde</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+        <!-- Información Personal -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>👤 Información Personal</h3>
+            </div>
+            <div class="info-group">
+                <label>Nombre Completo</label>
+                <input type="text" id="input-name" class="info-input" value="María Inquilina" disabled>
+            </div>
+            <div class="info-group">
+                <label>Correo Electrónico</label>
+                <input type="email" id="input-email" class="info-input" value="maria@ejemplo.com" disabled>
+            </div>
+            <div class="info-group">
+                <label>Teléfono / WhatsApp</label>
+                <input type="tel" id="input-phone" class="info-input" value="+591 71234567" disabled>
+            </div>
+            <div class="info-group">
+                <label>Fecha de Nacimiento</label>
+                <input type="date" id="input-birthdate" class="info-input" value="1995-06-15" disabled>
+            </div>
+        </div>
+
+        <!-- Sobre Mí -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>📝 Sobre Mí</h3>
+            </div>
+            <div class="info-group">
+                <label>Descripción</label>
+                <textarea id="input-bio" class="info-textarea" rows="4" disabled>Estudiante universitaria, responsable y ordenada. Busco un cuarto tranquilo cerca de la universidad.</textarea>
+            </div>
+            <div class="info-group">
+                <label>Ocupación</label>
+                <input type="text" id="input-occupation" class="info-input" value="Estudiante" disabled>
+            </div>
+        </div>
+
+        <!-- Preferencias de Búsqueda -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>🎯 Preferencias de Búsqueda</h3>
+            </div>
+            <div class="info-group">
+                <label>Presupuesto Máximo (Bs.)</label>
+                <input type="number" id="input-budget" class="info-input" value="800" disabled>
+            </div>
+            <div class="info-group">
+                <label>Zonas Preferidas</label>
+                <select id="input-zones" class="info-input" multiple disabled>
+                    <option value="norte" selected>Zona Norte</option>
+                    <option value="centro">Centro</option>
+                    <option value="este">Zona Este</option>
+                    <option value="oeste">Zona Oeste</option>
+                    <option value="sur">Zona Sur</option>
+                </select>
+            </div>
+            <div class="info-group">
+                <label>Servicios Requeridos</label>
+                <div class="chips-container">
+                    <span class="chip">📶 WiFi</span>
+                    <span class="chip">💧 Agua</span>
+                    <span class="chip">💡 Luz</span>
+                    <span class="chip">🛋️ Amoblado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verificación -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>✅ Verificación</h3>
+            </div>
+            <div class="verification-list">
+                <div class="verification-item verified">
+                    <span class="verification-icon">✓</span>
+                    <span class="verification-text">Correo verificado</span>
+                </div>
+                <div class="verification-item verified">
+                    <span class="verification-icon">✓</span>
+                    <span class="verification-text">Teléfono verificado</span>
+                </div>
+                <div class="verification-item">
+                    <span class="verification-icon">○</span>
+                    <span class="verification-text">Identidad verificada</span>
+                    <button class="verify-btn">Verificar</button>
+                </div>
+                <div class="verification-item">
+                    <span class="verification-icon">○</span>
+                    <span class="verification-text">Estudiante verificado</span>
+                    <button class="verify-btn">Verificar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calificaciones y Reseñas -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>⭐ Calificaciones y Reseñas</h3>
+                <span class="reviews-count">(0 reseñas)</span>
+            </div>
+            <div class="rating-summary">
+                <div class="rating-stars">
+                    ⭐⭐⭐⭐⭐
+                </div>
+                <div class="rating-text">Aún no tienes reseñas</div>
+                <p class="rating-description">Las reseñas de propietarios aparecerán aquí</p>
+            </div>
+        </div>
+
+        <!-- Preferencias de Notificaciones -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>🔔 Notificaciones</h3>
+            </div>
+            <div class="toggle-list">
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Nuevos cuartos</div>
+                        <div class="toggle-description">Cuartos que coinciden con tus preferencias</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notif-new-rooms" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Cambios de precio</div>
+                        <div class="toggle-description">Cuando baja el precio de tus favoritos</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notif-price-drops" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <div class="toggle-title">Promociones</div>
+                        <div class="toggle-description">Ofertas y novedades de Micuartito</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notif-promos">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cuenta -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>🔐 Cuenta y Seguridad</h3>
+            </div>
+            <div class="action-list">
+                <button class="action-item" onclick="changePassword()">
+                    <span class="action-icon">🔑</span>
+                    <span class="action-text">Cambiar Contraseña</span>
+                    <span class="action-arrow">›</span>
+                </button>
+                <button class="action-item" onclick="privacySettings()">
+                    <span class="action-icon">🔒</span>
+                    <span class="action-text">Privacidad</span>
+                    <span class="action-arrow">›</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Ayuda -->
+        <div class="profile-section">
+            <div class="section-header">
+                <h3>❓ Ayuda y Soporte</h3>
+            </div>
+            <div class="action-list">
+                <button class="action-item" onclick="showHelp()">
+                    <span class="action-icon">📚</span>
+                    <span class="action-text">Centro de Ayuda</span>
+                    <span class="action-arrow">›</span>
+                </button>
+                <button class="action-item" onclick="contactSupport()">
+                    <span class="action-icon">💬</span>
+                    <span class="action-text">Contactar Soporte</span>
+                    <span class="action-arrow">›</span>
+                </button>
+                <button class="action-item" onclick="showTerms()">
+                    <span class="action-icon">📄</span>
+                    <span class="action-text">Términos y Condiciones</span>
+                    <span class="action-arrow">›</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Cerrar Sesión -->
+        <div class="profile-section">
+            <button class="btn-logout" onclick="confirmLogout()">
+                🚪 Cerrar Sesión
+            </button>
+        </div>
+
+        <!-- Botón Guardar (solo visible en modo edición) -->
+        <div class="save-section" id="save-section" style="display: none;">
+            <button class="btn-save" onclick="saveProfile()">
+                ✓ Guardar Cambios
+            </button>
+            <button class="btn-cancel" onclick="cancelEdit()">
+                ✕ Cancelar
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation para INQUILINO -->
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="goToHome()">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item" onclick="goToSearch()">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Buscar</span>
+        </button>
+        <button class="nav-item" onclick="goToFavorites()">
+            <span class="nav-icon">❤️</span>
+            <span class="nav-label">Favoritos</span>
+        </button>
+        <button class="nav-item active">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </button>
+    </div>
+
+    <script src="perfil-inquilino.js"></script>
+</body>
+</html>
