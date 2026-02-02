@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Favoritos - Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="favoritos-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header favoritos-header">
+        <div class="header-top">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="header-title">
+                <h1>Mis Favoritos</h1>
+                <p>Cuartos que guardaste</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <div class="stat-icon">❤️</div>
+            <div class="stat-info">
+                <div class="stat-number" id="total-favorites">0</div>
+                <div class="stat-label">Favoritos</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-info">
+                <div class="stat-number" id="avg-price">Bs. 0</div>
+                <div class="stat-label">Precio Promedio</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+                <div class="stat-number" id="price-range">-</div>
+                <div class="stat-label">Rango</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Options -->
+    <div class="filter-options">
+        <button class="sort-btn" onclick="toggleSortMenu()">
+            <span>⬆️</span>
+            <span id="sort-text">Ordenar</span>
+            <span>▼</span>
+        </button>
+        <button class="clear-all-btn" onclick="clearAllFavorites()">
+            🗑️ Limpiar Todo
+        </button>
+    </div>
+
+    <!-- Sort Menu -->
+    <div class="sort-menu" id="sort-menu">
+        <button class="sort-option" onclick="sortFavorites('price-asc')">
+            💰 Precio: Menor a Mayor
+        </button>
+        <button class="sort-option" onclick="sortFavorites('price-desc')">
+            💰 Precio: Mayor a Menor
+        </button>
+        <button class="sort-option" onclick="sortFavorites('recent')">
+            🕒 Agregados Recientemente
+        </button>
+    </div>
+
+    <!-- Favorites List -->
+    <div class="favorites-container" id="favorites-container">
+        <!-- Los favoritos se generarán aquí -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-icon">💔</div>
+        <h3>No tienes favoritos</h3>
+        <p>Empieza a guardar cuartos que te interesen para compararlos después</p>
+        <button class="btn-primary" onclick="goToSearch()">
+            🔍 Buscar Cuartos
+        </button>
+    </div>
+
+    <!-- Modal de Comparación -->
+    <div class="modal" id="compare-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>📊 Comparar Cuartos</h2>
+                <button class="close-modal" onclick="closeCompareModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="compare-grid" id="compare-grid">
+                    <!-- La comparación se generará aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation para INQUILINO -->
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="goToHome()">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item" onclick="goToSearch()">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Buscar</span>
+        </button>
+        <button class="nav-item active">
+            <span class="nav-icon">❤️</span>
+            <span class="nav-label">Favoritos</span>
+        </button>
+        <button class="nav-item" onclick="goToProfile()">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </button>
+    </div>
+
+    <script src="favoritos.js"></script>
+</body>
+</html>

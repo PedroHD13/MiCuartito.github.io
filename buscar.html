@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Cuartos - Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="buscar-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header buscar-header">
+        <div class="header-top">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="header-title">
+                <h1>Buscar Cuartos</h1>
+                <p>Encuentra tu espacio ideal</p>
+            </div>
+        </div>
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Buscar por zona, barrio..." id="search-input">
+        </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-section">
+        <button class="filter-btn primary" onclick="openFilterModal()">
+            🎛️ Filtros
+        </button>
+        <button class="filter-btn" id="price-filter">💰 Precio</button>
+        <button class="filter-btn" id="zone-filter">📍 Zona</button>
+        <button class="filter-btn" id="bathroom-filter">🚿 Baño privado</button>
+        <button class="filter-btn" id="furnished-filter">🛋️ Amoblado</button>
+    </div>
+
+    <!-- Results Header -->
+    <div class="results-header">
+        <div class="results-count">
+            <strong id="results-count">24</strong> cuartos disponibles
+        </div>
+        <button class="sort-btn" onclick="toggleSort()">
+            <span id="sort-icon">⬆️</span>
+            <span id="sort-text">Menor precio</span>
+        </button>
+    </div>
+
+    <!-- Rooms List -->
+    <div class="rooms-container" id="rooms-container">
+        <!-- Los cuartos se generarán aquí -->
+    </div>
+
+    <!-- Filter Modal -->
+    <div class="filter-modal" id="filter-modal" onclick="closeFilterModal(event)">
+        <div class="filter-content" onclick="event.stopPropagation()">
+            <div class="filter-header">
+                <h2>Filtros</h2>
+                <button class="close-filter" onclick="closeFilterModal()">×</button>
+            </div>
+
+            <!-- Precio -->
+            <div class="filter-group">
+                <div class="filter-group-title">💰 Rango de Precio (Bs.)</div>
+                <div class="price-inputs">
+                    <input type="number" placeholder="Mín" id="price-min">
+                    <span>-</span>
+                    <input type="number" placeholder="Máx" id="price-max">
+                </div>
+            </div>
+
+            <!-- Zona -->
+            <div class="filter-group">
+                <div class="filter-group-title">📍 Zona</div>
+                <select style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;" id="zone-select">
+                    <option value="">Todas las zonas</option>
+                    <option value="norte">Zona Norte</option>
+                    <option value="sur">Zona Sur</option>
+                    <option value="este">Zona Este</option>
+                    <option value="oeste">Zona Oeste</option>
+                    <option value="centro">Centro</option>
+                </select>
+            </div>
+
+            <!-- Baño -->
+            <div class="filter-group">
+                <div class="filter-group-title">🚿 Tipo de Baño</div>
+                <div class="checkbox-list">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="bath-private" value="privado">
+                        <span>Baño privado</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="bath-shared" value="compartido">
+                        <span>Baño compartido</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Amoblado -->
+            <div class="filter-group">
+                <div class="filter-group-title">🛋️ Mobiliario</div>
+                <div class="checkbox-list">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="furnished" value="amoblado">
+                        <span>Amoblado</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Servicios -->
+            <div class="filter-group">
+                <div class="filter-group-title">✨ Servicios Incluidos</div>
+                <div class="checkbox-list">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="service-wifi" value="wifi">
+                        <span>📶 WiFi</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="service-water" value="agua">
+                        <span>💧 Agua</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="service-electricity" value="luz">
+                        <span>💡 Luz</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="service-gas" value="gas">
+                        <span>🔥 Gas</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Capacidad -->
+            <div class="filter-group">
+                <div class="filter-group-title">👥 Capacidad</div>
+                <select style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;" id="capacity-select">
+                    <option value="">Cualquier capacidad</option>
+                    <option value="1">1 persona</option>
+                    <option value="2">2 personas</option>
+                    <option value="3">3 personas</option>
+                    <option value="4+">4 o más personas</option>
+                </select>
+            </div>
+
+            <!-- Actions -->
+            <div class="filter-actions">
+                <button class="btn-clear" onclick="clearFilters()">Limpiar</button>
+                <button class="btn-apply" onclick="applyFilters()">Aplicar Filtros</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="goToHome()">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item active">
+            <span class="nav-icon">🔍</span>
+            <span class="nav-label">Buscar</span>
+        </button>
+        <button class="nav-item" onclick="goToFavorites()">
+            <span class="nav-icon">❤️</span>
+            <span class="nav-label">Favoritos</span>
+        </button>
+        <button class="nav-item" onclick="goToProfile()">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </button>
+    </div>
+
+    <script src="buscar.js"></script>
+</body>
+</html>

@@ -385,7 +385,7 @@ function goToHome() {
 }
 
 function goToFavorites() {
-    alert('Próximamente: Pantalla de favoritos');
+    window.location.href = 'favoritos.html';
 }
 
 function goToProfile() {

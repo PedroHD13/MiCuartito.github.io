@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Cuartos - Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mis-cuartos-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header mis-cuartos-header">
+        <div class="header-top">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="header-title">
+                <h1>Mis Cuartos</h1>
+                <p>Gestiona tus publicaciones</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <div class="stat-icon">🏠</div>
+            <div class="stat-info">
+                <div class="stat-number" id="total-rooms">0</div>
+                <div class="stat-label">Total Publicados</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+                <div class="stat-number" id="active-rooms">0</div>
+                <div class="stat-label">Activos</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👁️</div>
+            <div class="stat-info">
+                <div class="stat-number" id="total-views">0</div>
+                <div class="stat-label">Visualizaciones</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterRooms('all')" id="tab-all">
+            Todos (<span id="count-all">0</span>)
+        </button>
+        <button class="filter-tab" onclick="filterRooms('active')" id="tab-active">
+            Activos (<span id="count-active">0</span>)
+        </button>
+        <button class="filter-tab" onclick="filterRooms('inactive')" id="tab-inactive">
+            Pausados (<span id="count-inactive">0</span>)
+        </button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="btn-new-room" onclick="goToPublish()">
+            ➕ Publicar Nuevo Cuarto
+        </button>
+    </div>
+
+    <!-- Rooms List -->
+    <div class="my-rooms-container" id="my-rooms-container">
+        <!-- Los cuartos se generarán aquí -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-icon">🏠</div>
+        <h3>No tienes cuartos publicados</h3>
+        <p>Comienza publicando tu primer cuarto para atraer inquilinos</p>
+        <button class="btn-primary" onclick="goToPublish()">
+            Publicar Cuarto
+        </button>
+    </div>
+
+    <!-- Modal de Edición -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Editar Cuarto</h2>
+                <button class="close-modal" onclick="closeEditModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form">
+                    <div class="input-group">
+                        <label for="edit-tipo">Tipo de Habitación</label>
+                        <select id="edit-tipo">
+                            <option value="privada">Privada</option>
+                            <option value="compartida">Compartida</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-capacidad">Capacidad</label>
+                        <select id="edit-capacidad">
+                            <option value="1">1 persona</option>
+                            <option value="2">2 personas</option>
+                            <option value="3">3 personas</option>
+                            <option value="4">4 personas</option>
+                            <option value="5+">5 o más personas</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-precio">Precio mensual (Bs.)</label>
+                        <input type="number" id="edit-precio" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="edit-reglas">Reglas de la Casa</label>
+                        <textarea id="edit-reglas" rows="4"></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeEditModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn-save">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>⚠️ Confirmar Eliminación</h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro que deseas eliminar esta publicación?</p>
+                <p class="warning-text">Esta acción no se puede deshacer.</p>
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeDeleteModal()">
+                        Cancelar
+                    </button>
+                    <button class="btn-delete" onclick="confirmDelete()">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation para PROPIETARIO -->
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="goToHome()">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item" onclick="goToPublish()">
+            <span class="nav-icon">➕</span>
+            <span class="nav-label">Publicar</span>
+        </button>
+        <button class="nav-item active">
+            <span class="nav-icon">🏘️</span>
+            <span class="nav-label">Mis Cuartos</span>
+        </button>
+        <button class="nav-item" onclick="goToProfile()">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </button>
+    </div>
+
+    <script src="mis-cuartos.js"></script>
+</body>
+</html>

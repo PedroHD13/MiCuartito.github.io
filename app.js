@@ -90,16 +90,26 @@ function navigateTo(section) {
 
     // Si es buscar, redirigir a la página de búsqueda
     if (section === 'buscar') {
-        window.location.href = 'buscarcuarto.html';
+        window.location.href = 'buscar.html';
+        return;
+    }
+
+    // Si es mis cuartos, redirigir a la página de mis cuartos
+    if (section === 'mis-cuartos') {
+        window.location.href = 'mis-cuartos.html';
+        return;
+    }
+
+    // Si es favoritos, redirigir a la página de favoritos
+    if (section === 'favoritos') {
+        window.location.href = 'favoritos.html';
         return;
     }
 
     // Para las demás secciones, mostrar mensaje de próximamente
     const messages = {
-        'favoritos': 'Próximamente: Tus cuartos favoritos',
-        'perfil-inquilino': 'Próximamente: Tu perfil de inquilino',
-        'mis-cuartos': 'Próximamente: Tus cuartos publicados',
         'contactos': 'Próximamente: Contactos recibidos',
+        'perfil-inquilino': 'Próximamente: Tu perfil de inquilino',
         'perfil-propietario': 'Próximamente: Tu perfil de propietario',
         'ayuda': 'Próximamente: Ayuda y reglas'
     };
@@ -117,7 +127,7 @@ function goToHome() {
 
 function goToSearch() {
     updateActiveNav(1);
-    navigateTo('buscar');
+    navigateTo('buscarcuarto');
 }
 
 function goToPublish() {

@@ -42,8 +42,7 @@ function goToHome() {
 
 function goToMyRooms() {
     if (confirm('¿Seguro que quieres salir? Se perderán los cambios no guardados.')) {
-        alert('Próximamente: Mis Cuartos');
-        // window.location.href = 'mis-cuartos.html';
+        window.location.href = 'mis-cuartos.html';
     }
 }
 
