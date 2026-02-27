@@ -400,3 +400,46 @@ body {
     font-weight: 600;
     cursor: pointer;
 }
+
+/* Badge contador de filtros activos */
+.filter-badge {
+    background: white;
+    color: #d9764a;
+    font-size: 0.75em;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 4px;
+}
+
+/* Toast de confirmación (reemplaza el alert) */
+.filter-toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2563a8;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    font-weight: 600;
+    z-index: 2000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.filter-toast.show {
+    opacity: 1;
+}
+
+/* Botón aplicar mejorado */
+.btn-apply {
+    position: relative;
+}
+
+.btn-apply:active {
+    transform: scale(0.97);
+}
