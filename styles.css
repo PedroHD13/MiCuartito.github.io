@@ -178,6 +178,40 @@ input:focus, select:focus {
     margin-bottom: 5px;
 }
 
+/* Password toggle */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    padding-right: 45px; /* espacio para el botón */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 4px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    width: auto;  /* override del width:100% del btn general */
+    margin-top: 0;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+.toggle-password.visible {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px #d9764a);
+}
 /* ============================================
    PANTALLA DE DASHBOARD
    ============================================ */

@@ -19,6 +19,14 @@ const demoUsers = {
 // FUNCIONES DE LOGIN
 // ============================================
 
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    btn.textContent = isPassword ? '🙈' : '👁';
+    btn.classList.toggle('visible', isPassword);
+}
+
 function switchTab(tab) {
     const tabs = document.querySelectorAll('.tab');
     const sections = document.querySelectorAll('.form-section');
