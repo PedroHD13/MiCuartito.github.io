@@ -194,9 +194,8 @@ function showHelp() {
 }
 
 function contactSupport() {
-    const message = encodeURIComponent('Hola, necesito ayuda con mi cuenta de propietario en Micuartito');
-    alert('💬 Contactar Soporte\n\n(Próximamente: chat de soporte o abrir WhatsApp)');
-    // window.open(`https://wa.me/59171234567?text=${message}`, '_blank');
+    // Abrir WhatsApp de soporte
+    window.location.href = 'contacto-whatsapp.html';
 }
 
 function showTerms() {

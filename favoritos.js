@@ -380,12 +380,8 @@ function viewRoomDetail(roomId) {
 function contactOwner(roomId) {
     const room = allRooms.find(r => r.id === roomId);
     if (room) {
-        const message = encodeURIComponent(`Hola, me interesa el cuarto: ${room.title} - Bs. ${room.price}/mes`);
-        alert(`📱 Contactando al propietario...\n\n` +
-              `Cuarto: ${room.title}\n` +
-              `Precio: Bs. ${room.price}/mes\n\n` +
-              `(Próximamente: abrir WhatsApp directamente)`
-        );
+        // Abrir WhatsApp directamente con tu link
+        window.location.href = 'contacto-whatsapp.html';
     }
 }
 
@@ -406,7 +402,7 @@ function goToSearch() {
 }
 
 function goToProfile() {
-    alert('Próximamente: Tu perfil');
+    window.location.href = 'perfil-inquilino.html';
 }
 
 // ============================================
