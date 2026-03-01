@@ -58,7 +58,17 @@
             <div class="filter-scrollable">
                 <div class="filter-header">
                     <h2>Filtros</h2>
-                    <button class="close-filter" onclick="closeFilterModal()">×</button>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <button class="btn-clear" onclick="clearFilters()" 
+                                style="padding:8px 12px; font-size:0.85em;">
+                            Limpiar
+                        </button>
+                        <button class="btn-apply" onclick="applyFilters()" 
+                                style="padding:8px 12px; font-size:0.85em;">
+                            ✅ Aplicar
+                        </button>
+                        <button class="close-filter" onclick="closeFilterModal()">×</button>
+                    </div>
                 </div>
 
                 <!-- Precio -->
@@ -144,12 +154,6 @@
                         <option value="4+">4 o más personas</option>
                     </select>
                 </div>
-            </div>
-
-            <!-- Actions FIJO abajo -->
-            <div class="filter-actions">
-                <button class="btn-clear" onclick="clearFilters()">Limpiar</button>
-                <button class="btn-apply" onclick="applyFilters()">Aplicar Filtros</button>
             </div>
 
         </div>
