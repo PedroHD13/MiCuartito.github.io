@@ -247,6 +247,67 @@ document.getElementById('search-input')?.addEventListener('input', (e) => {
 });
 
 // ============================================
+// FILTROS RÁPIDOS
+// ============================================
+
+const quickFilters = {
+    bathroom: false,
+    furnished: false,
+    wifi: false
+};
+
+function toggleQuickFilter(type) {
+    // Toggle estado
+    quickFilters[type] = !quickFilters[type];
+
+    // Actualizar estilo del botón
+    const btnMap = {
+        bathroom: 'bathroom-filter',
+        furnished: 'furnished-filter',
+        wifi: 'wifi-filter'
+    };
+    const btn = document.getElementById(btnMap[type]);
+    btn.classList.toggle('active', quickFilters[type]);
+
+    // Aplicar filtros rápidos combinados
+    applyQuickFilters();
+}
+
+function applyQuickFilters() {
+    let filtered = allRooms;
+
+    if (quickFilters.bathroom) {
+        filtered = filtered.filter(r => r.bathroom === 'privado');
+    }
+    if (quickFilters.furnished) {
+        filtered = filtered.filter(r => r.furnished === true);
+    }
+    if (quickFilters.wifi) {
+        filtered = filtered.filter(r => r.services.includes('wifi'));
+    }
+
+    // Si hay filtros del modal también activos, combinar
+    if (currentFilters) {
+        const modalIds = currentFilters.map(r => r.id);
+        filtered = filtered.filter(r => modalIds.includes(r.id));
+    }
+
+    renderRooms(filtered);
+
+    const label = [];
+    if (quickFilters.bathroom) label.push('Baño privado');
+    if (quickFilters.furnished) label.push('Amoblado');
+    if (quickFilters.wifi) label.push('WiFi');
+
+    if (label.length > 0) {
+        showToast(`✅ Filtro activo: ${label.join(', ')}`);
+    } else {
+        renderRooms(currentFilters || allRooms);
+        showToast('🗑️ Filtros rápidos quitados');
+    }
+}
+
+// ============================================
 // MODAL DE FILTROS
 // ============================================
 

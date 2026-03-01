@@ -29,10 +29,15 @@
             🎛️ Filtros
             <span class="filter-badge" id="filter-badge" style="display:none;">0</span>
         </button>
-        <button class="filter-btn" id="price-filter">💰 Precio</button>
-        <button class="filter-btn" id="zone-filter">📍 Zona</button>
-        <button class="filter-btn" id="bathroom-filter">🚿 Baño privado</button>
-        <button class="filter-btn" id="furnished-filter">🛋️ Amoblado</button>
+        <button class="filter-btn" id="bathroom-filter" onclick="toggleQuickFilter('bathroom')">
+            🚿 Baño privado
+        </button>
+        <button class="filter-btn" id="furnished-filter" onclick="toggleQuickFilter('furnished')">
+            🛋️ Amoblado
+        </button>
+        <button class="filter-btn" id="wifi-filter" onclick="toggleQuickFilter('wifi')">
+            📶 WiFi
+        </button>
     </div>
 
     <!-- Results Header -->
