@@ -511,3 +511,148 @@ body {
     border-radius: 12px;
     font-size: 0.75em;
 }
+
+/* ============================================
+   MEJORAS BOTÓN COMPARAR Y MODAL
+   ============================================ */
+
+/* Botón flotante mejorado con texto */
+.compare-floating-btn {
+    width: auto !important;
+    height: auto !important;
+    border-radius: 30px !important;
+    padding: 12px 20px !important;
+    font-size: 1em !important;
+    gap: 8px;
+    flex-direction: row !important;
+}
+
+.compare-btn-text {
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+/* Checkbox de selección en cada card */
+.compare-select-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 5;
+}
+
+.compare-checkbox {
+    width: 24px;
+    height: 24px;
+    accent-color: #2563a8;
+    cursor: pointer;
+}
+
+.favorite-card.selected-for-compare {
+    border: 3px solid #2563a8;
+    box-shadow: 0 0 15px rgba(37, 99, 168, 0.3);
+}
+
+/* Hint del modal */
+.compare-hint {
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f0f5ff;
+    border-radius: 8px;
+}
+
+/* Botón ejecutar comparación */
+.btn-do-compare {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #2563a8 0%, #d9764a 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+
+.btn-do-compare:active {
+    transform: scale(0.97);
+}
+
+/* Resultado de comparación lado a lado */
+.compare-result {
+    margin-top: 20px;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+}
+
+.compare-table th {
+    background: linear-gradient(135deg, #2563a8 0%, #d9764a 100%);
+    color: white;
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.compare-table th:first-child {
+    background: #f0f0f0;
+    color: #333;
+    text-align: left;
+}
+
+.compare-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+    color: #333;
+}
+
+.compare-table td:first-child {
+    text-align: left;
+    color: #666;
+    font-weight: 600;
+    background: #fafafa;
+}
+
+.compare-table tr:hover td {
+    background: #f9f9f9;
+}
+
+.compare-table tr:hover td:first-child {
+    background: #f0f0f0;
+}
+
+.highlight-best {
+    color: #2563a8;
+    font-weight: 700;
+}
+
+/* Toast reutilizado del buscar */
+.filter-toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2563a8;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    font-weight: 600;
+    z-index: 3000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.filter-toast.show {
+    opacity: 1;
+}

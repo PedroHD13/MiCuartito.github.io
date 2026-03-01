@@ -169,30 +169,39 @@ function updateStats() {
 function renderFavorites() {
     const container = document.getElementById('favorites-container');
     const emptyState = document.getElementById('empty-state');
-    
+
     if (favoriteRoomsData.length === 0) {
         container.style.display = 'none';
         emptyState.style.display = 'block';
+        const btn = document.getElementById('compare-btn');
+        if (btn) btn.remove();
         return;
     }
-    
+
     container.style.display = 'block';
     emptyState.style.display = 'none';
-    
+
     container.innerHTML = favoriteRoomsData.map(room => {
         const addedDate = new Date(room.addedDate);
-        const formattedDate = addedDate.toLocaleDateString('es-ES', { 
-            day: '2-digit', 
-            month: 'short' 
+        const formattedDate = addedDate.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short'
         });
-        
+
         return `
-            <div class="favorite-card">
+            <div class="favorite-card" id="card-${room.id}">
                 <div class="favorite-card-header">
-                    <img src="${room.image}" alt="${room.title}" onerror="this.src='https://via.placeholder.com/400x300/2563a8/ffffff?text=Cuarto'">
-                    <button class="remove-favorite-btn" onclick="removeFavorite(${room.id})" title="Quitar de favoritos">
-                        ❤️
-                    </button>
+                    <img src="${room.image}" alt="${room.title}"
+                         onerror="this.src='https://via.placeholder.com/400x300/2563a8/ffffff?text=Cuarto'">
+                    <!-- Checkbox de selección para comparar -->
+                    <div class="compare-select-wrapper">
+                        <input type="checkbox" class="compare-checkbox"
+                               id="chk-${room.id}"
+                               onchange="toggleSelectForCompare(${room.id}, this)"
+                               title="Seleccionar para comparar">
+                    </div>
+                    <button class="remove-favorite-btn" onclick="removeFavorite(${room.id})"
+                            title="Quitar de favoritos">❤️</button>
                     <span class="favorite-badge">${room.type}</span>
                     <span class="added-date">Agregado: ${formattedDate}</span>
                 </div>
@@ -206,8 +215,7 @@ function renderFavorites() {
                     </div>
                     <div class="favorite-card-footer">
                         <div class="favorite-card-price">
-                            Bs. ${room.price}
-                            <span>/mes</span>
+                            Bs. ${room.price}<span>/mes</span>
                         </div>
                         <div class="favorite-actions">
                             <button class="action-btn btn-view" onclick="viewRoomDetail(${room.id})">
@@ -222,8 +230,8 @@ function renderFavorites() {
             </div>
         `;
     }).join('');
-    
-    // Agregar botón flotante de comparar si hay 2 o más favoritos
+
+    // Botón flotante comparar con texto
     if (favoriteRoomsData.length >= 2) {
         if (!document.getElementById('compare-btn')) {
             const compareBtn = document.createElement('button');
@@ -232,6 +240,7 @@ function renderFavorites() {
             compareBtn.onclick = openCompareModal;
             compareBtn.innerHTML = `
                 📊
+                <span class="compare-btn-text">Comparar</span>
                 <span class="compare-badge">${favoriteRoomsData.length}</span>
             `;
             document.body.appendChild(compareBtn);
@@ -239,8 +248,8 @@ function renderFavorites() {
             document.querySelector('.compare-badge').textContent = favoriteRoomsData.length;
         }
     } else {
-        const existingBtn = document.getElementById('compare-btn');
-        if (existingBtn) existingBtn.remove();
+        const btn = document.getElementById('compare-btn');
+        if (btn) btn.remove();
     }
 }
 
@@ -249,13 +258,12 @@ function renderFavorites() {
 // ============================================
 
 function removeFavorite(roomId) {
-    if (confirm('¿Quitar este cuarto de tus favoritos?')) {
-        const index = favoriteRooms.indexOf(roomId);
-        if (index > -1) {
-            favoriteRooms.splice(index, 1);
-            saveFavorites();
-            loadFavorites();
-        }
+    const index = favoriteRooms.indexOf(roomId);
+    if (index > -1) {
+        favoriteRooms.splice(index, 1);
+        saveFavorites();
+        loadFavorites();
+        showToast('🗑️ Cuarto quitado de favoritos');
     }
 }
 
@@ -265,15 +273,14 @@ function removeFavorite(roomId) {
 
 function clearAllFavorites() {
     if (favoriteRoomsData.length === 0) {
-        alert('⚠️ No tienes favoritos para eliminar');
+        showToast('⚠️ No tienes favoritos para eliminar');
         return;
     }
-    
-    if (confirm(`¿Seguro que quieres eliminar todos tus ${favoriteRoomsData.length} favoritos?\n\nEsta acción no se puede deshacer.`)) {
+    if (confirm(`¿Eliminar todos tus ${favoriteRoomsData.length} favoritos?`)) {
         favoriteRooms = [];
         saveFavorites();
         loadFavorites();
-        alert('✅ Todos los favoritos fueron eliminados');
+        showToast('✅ Todos los favoritos eliminados');
     }
 }
 
@@ -315,41 +322,133 @@ function sortFavorites(sortType) {
 function openCompareModal() {
     const modal = document.getElementById('compare-modal');
     const grid = document.getElementById('compare-grid');
-    
+    const result = document.getElementById('compare-result');
+    const btnDoCompare = document.getElementById('btn-do-compare');
+    const hint = document.getElementById('compare-hint');
+
+    // Resetear estado del modal
+    result.innerHTML = '';
+    btnDoCompare.style.display = 'none';
+    hint.textContent = 'Selecciona 2 o 3 cuartos para comparar';
+
+    // Mostrar cards seleccionables en el modal
     grid.innerHTML = favoriteRoomsData.map(room => `
-        <div class="compare-item">
-            <div class="compare-item-header">
-                <div class="compare-item-title">${room.title}</div>
-                <div class="compare-item-price">Bs. ${room.price}</div>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">📍 Ubicación:</span>
-                <span class="compare-value">${room.location}</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">🚪 Tipo:</span>
-                <span class="compare-value">${room.type}</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">👥 Capacidad:</span>
-                <span class="compare-value">${room.capacity} persona(s)</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">🚿 Baño:</span>
-                <span class="compare-value">${room.bathroom === 'privado' ? 'Privado' : 'Compartido'}</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">🛋️ Amoblado:</span>
-                <span class="compare-value">${room.furnished ? 'Sí' : 'No'}</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">✨ Servicios:</span>
-                <span class="compare-value">${room.services.length} incluidos</span>
+        <div class="compare-item" id="modal-card-${room.id}" onclick="toggleModalSelect(${room.id})"
+             style="cursor:pointer; border: 2px solid #e0e0e0; border-radius:12px; padding:12px; margin-bottom:10px; display:flex; align-items:center; gap:12px;">
+            <input type="checkbox" id="modal-chk-${room.id}" style="width:22px; height:22px; accent-color:#2563a8; flex-shrink:0;">
+            <div>
+                <div style="font-weight:700; color:#333; margin-bottom:4px;">${room.title}</div>
+                <div style="font-size:0.85em; color:#666;">📍 ${room.location}</div>
+                <div style="font-size:1em; font-weight:700; color:#d9764a; margin-top:4px;">Bs. ${room.price}/mes</div>
             </div>
         </div>
     `).join('');
-    
+
     modal.classList.add('active');
+}
+
+function doCompare() {
+    const checkboxes = document.querySelectorAll('#compare-grid input[type="checkbox"]:checked');
+    const selectedIds = Array.from(checkboxes).map(chk =>
+        parseInt(chk.id.replace('modal-chk-', ''))
+    );
+
+    if (selectedIds.length < 2) {
+        showToast('⚠️ Selecciona al menos 2 cuartos');
+        return;
+    }
+
+    const selectedRooms = favoriteRoomsData.filter(r => selectedIds.includes(r.id));
+    const minPrice = Math.min(...selectedRooms.map(r => r.price));
+
+    const headers = selectedRooms.map(r =>
+        `<th>${r.title.length > 18 ? r.title.substring(0,18)+'...' : r.title}</th>`
+    ).join('');
+
+    const rows = [
+        {
+            label: '💰 Precio/mes',
+            values: selectedRooms.map(r =>
+                `<td class="${r.price === minPrice ? 'highlight-best' : ''}">Bs. ${r.price}</td>`
+            )
+        },
+        {
+            label: '📍 Ubicación',
+            values: selectedRooms.map(r => `<td>${r.location}</td>`)
+        },
+        {
+            label: '🚿 Baño',
+            values: selectedRooms.map(r =>
+                `<td>${r.bathroom === 'privado' ? '✅ Privado' : '🔄 Compartido'}</td>`
+            )
+        },
+        {
+            label: '🛋️ Amoblado',
+            values: selectedRooms.map(r =>
+                `<td>${r.furnished ? '✅ Sí' : '❌ No'}</td>`
+            )
+        },
+        {
+            label: '👥 Capacidad',
+            values: selectedRooms.map(r => `<td>${r.capacity} persona(s)</td>`)
+        },
+        {
+            label: '✨ Servicios',
+            values: selectedRooms.map(r => `<td>${r.services.length} incluidos</td>`)
+        }
+    ];
+
+    const tableRows = rows.map(row =>
+        `<tr><td>${row.label}</td>${row.values.join('')}</tr>`
+    ).join('');
+
+    document.getElementById('compare-result').innerHTML = `
+        <h3 style="text-align:center; color:#333; margin-bottom:15px; font-size:1em;">
+            📊 Comparación lado a lado
+        </h3>
+        <div style="overflow-x:auto;">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        ${headers}
+                    </tr>
+                </thead>
+                <tbody>${tableRows}</tbody>
+            </table>
+        </div>
+        <p style="text-align:center; font-size:0.8em; color:#999; margin-top:10px;">
+            💡 Precio en <span class="highlight-best">azul</span> = más económico
+        </p>
+    `;
+}
+
+function toggleModalSelect(roomId) {
+    const chk = document.getElementById(`modal-chk-${roomId}`);
+    const card = document.getElementById(`modal-card-${roomId}`);
+    chk.checked = !chk.checked;
+
+    if (chk.checked) {
+        card.style.borderColor = '#2563a8';
+        card.style.background = '#f0f5ff';
+    } else {
+        card.style.borderColor = '#e0e0e0';
+        card.style.background = 'white';
+    }
+
+    const selected = document.querySelectorAll('#compare-grid input[type="checkbox"]:checked');
+    const btn = document.getElementById('btn-do-compare');
+    const hint = document.getElementById('compare-hint');
+
+    if (selected.length >= 2) {
+        btn.style.display = 'block';
+        hint.textContent = `✅ ${selected.length} cuarto(s) seleccionado(s). ¡Listo para comparar!`;
+        hint.style.background = '#e8f5e9';
+    } else {
+        btn.style.display = 'none';
+        hint.textContent = `Selecciona ${2 - selected.length} más para comparar`;
+        hint.style.background = '#f0f5ff';
+    }
 }
 
 function closeCompareModal() {
@@ -382,6 +481,32 @@ function contactOwner(roomId) {
     if (room) {
         // Abrir WhatsApp directamente con tu link
         window.location.href = 'contacto-whatsapp.html';
+    }
+}
+
+function showToast(message) {
+    const existing = document.querySelector('.filter-toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'filter-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
+    });
+}
+
+// También elimina la función toggleSelectForCompare si no la tienes
+function toggleSelectForCompare(roomId, checkbox) {
+    const card = document.getElementById(`card-${roomId}`);
+    if (checkbox.checked) {
+        card.classList.add('selected-for-compare');
+    } else {
+        card.classList.remove('selected-for-compare');
     }
 }
 

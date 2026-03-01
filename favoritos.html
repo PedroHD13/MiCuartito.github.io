@@ -92,9 +92,12 @@
                 <button class="close-modal" onclick="closeCompareModal()">×</button>
             </div>
             <div class="modal-body">
-                <div class="compare-grid" id="compare-grid">
-                    <!-- La comparación se generará aquí -->
-                </div>
+                <p class="compare-hint" id="compare-hint">Selecciona 2 o 3 cuartos para comparar</p>
+                <div class="compare-grid" id="compare-grid"></div>
+                <button class="btn-do-compare" id="btn-do-compare" onclick="doCompare()" style="display:none;">
+                    📊 Comparar seleccionados
+                </button>
+                <div class="compare-result" id="compare-result"></div>
             </div>
         </div>
     </div>
