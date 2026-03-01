@@ -266,10 +266,12 @@ function clearFilters() {
     document.getElementById('zone-select').value = '';
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
     document.getElementById('capacity-select').value = '';
-    
+
     currentFilters = null;
     renderRooms(allRooms);
+    updateFilterBadge();
     closeFilterModal();
+    showToast('🗑️ Filtros eliminados');
 }
 
 function applyFilters() {
@@ -280,59 +282,40 @@ function applyFilters() {
     const bathShared = document.getElementById('bath-shared').checked;
     const furnished = document.getElementById('furnished').checked;
     const capacity = document.getElementById('capacity-select').value;
-    
-    // Servicios
     const wifiRequired = document.getElementById('service-wifi').checked;
     const waterRequired = document.getElementById('service-water').checked;
     const electricityRequired = document.getElementById('service-electricity').checked;
     const gasRequired = document.getElementById('service-gas').checked;
-    
+
     let filtered = allRooms.filter(room => {
         let passFilter = true;
-        
-        // Filtro de precio
         if (room.price < priceMin || room.price > priceMax) passFilter = false;
-        
-        // Filtro de zona
         if (zone && !room.location.toLowerCase().includes(zone)) passFilter = false;
-        
-        // Filtro de baño
-        if ((bathPrivate || bathShared) && 
-            !((bathPrivate && room.bathroom === 'privado') || 
-              (bathShared && room.bathroom === 'compartido'))) {
-            passFilter = false;
-        }
-        
-        // Filtro de amoblado
+        if ((bathPrivate || bathShared) &&
+            !((bathPrivate && room.bathroom === 'privado') ||
+              (bathShared && room.bathroom === 'compartido'))) passFilter = false;
         if (furnished && !room.furnished) passFilter = false;
-        
-        // Filtro de capacidad
-        if (capacity && capacity !== '4+' && room.capacity !== parseInt(capacity)) {
-            passFilter = false;
-        }
-        if (capacity === '4+' && room.capacity < 4) {
-            passFilter = false;
-        }
-        
-        // Filtros de servicios
+        if (capacity && capacity !== '4+' && room.capacity !== parseInt(capacity)) passFilter = false;
+        if (capacity === '4+' && room.capacity < 4) passFilter = false;
         if (wifiRequired && !room.services.includes('wifi')) passFilter = false;
         if (waterRequired && !room.services.includes('agua')) passFilter = false;
         if (electricityRequired && !room.services.includes('luz')) passFilter = false;
         if (gasRequired && !room.services.includes('gas')) passFilter = false;
-        
         return passFilter;
     });
-    
+
     currentFilters = filtered;
     renderRooms(filtered);
     closeFilterModal();
-    
-    if (filtered.length === 0) {
-        alert('⚠️ No se encontraron cuartos con estos filtros.\nIntenta ajustar tus criterios de búsqueda.');
-    } else {
-        alert(`✅ Filtros aplicados. Mostrando ${filtered.length} resultado${filtered.length > 1 ? 's' : ''}.`);
-    }
+    updateFilterBadge();
+
+    // Toast en lugar de alert
+    const msg = filtered.length === 0
+        ? '😔 Sin resultados. Ajusta los filtros.'
+        : `✅ ${filtered.length} cuarto${filtered.length > 1 ? 's' : ''} encontrado${filtered.length > 1 ? 's' : ''}`;
+    showToast(msg);
 }
+
 
 // ============================================
 // ACCIONES DE CUARTOS
@@ -362,6 +345,62 @@ function contactOwner(roomId) {
         window.location.href = 'contacto-whatsapp.html';
     }
 }
+
+
+// ============================================
+// TOAST Y BADGE DE FILTROS
+// ============================================
+
+function showToast(message) {
+    // Remover toast anterior si existe
+    const existing = document.querySelector('.filter-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'filter-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Animar
+    requestAnimationFrame(() => {
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
+    });
+}
+
+function updateFilterBadge() {
+    const badge = document.getElementById('filter-badge');
+    const btn = document.getElementById('main-filter-btn');
+    if (!badge) return;
+
+    // Contar filtros activos
+    let count = 0;
+    if (document.getElementById('price-min').value) count++;
+    if (document.getElementById('price-max').value) count++;
+    if (document.getElementById('zone-select').value) count++;
+    if (document.getElementById('bath-private').checked) count++;
+    if (document.getElementById('bath-shared').checked) count++;
+    if (document.getElementById('furnished').checked) count++;
+    if (document.getElementById('capacity-select').value) count++;
+    if (document.getElementById('service-wifi').checked) count++;
+    if (document.getElementById('service-water').checked) count++;
+    if (document.getElementById('service-electricity').checked) count++;
+    if (document.getElementById('service-gas').checked) count++;
+
+    if (count > 0) {
+        badge.textContent = count;
+        badge.style.display = 'inline';
+        btn.style.outline = '3px solid white';
+    } else {
+        badge.style.display = 'none';
+        btn.style.outline = 'none';
+    }
+}
+
+
 
 // ============================================
 // NAVEGACIÓN
