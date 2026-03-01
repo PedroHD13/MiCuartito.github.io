@@ -293,20 +293,15 @@ body {
     background: white;
     border-radius: 20px 20px 0 0;
     animation: slideUp 0.3s;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .filter-scrollable {
-    overflow-y: auto;
+    overflow-y: scroll;
     padding: 20px;
-    max-height: 100vh;
-}
-
-.filter-actions {
-    display: flex;
-    gap: 10px;
-    padding: 15px 20px;
-    background: white;
-    border-top: 2px solid #f0f0f0;
+    flex: 1;
 }
 
 @keyframes slideUp {
@@ -318,7 +313,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 20px 20px 0 20px;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
 }
 
 .filter-header h2 {
@@ -385,31 +385,31 @@ body {
     accent-color: #d9764a;
 }
 
-.filter-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
 .btn-clear {
     flex: 1;
-    padding: 12px;
+    padding: 8px 12px;
     background: white;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
+    font-size: 0.85em;
 }
 
 .btn-apply {
     flex: 2;
-    padding: 12px;
+    padding: 8px 12px;
     background: linear-gradient(135deg, #2563a8 0%, #d9764a 100%);
     color: white;
     border: none;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
+    font-size: 0.85em;
+}
+
+.btn-apply:active {
+    transform: scale(0.97);
 }
 
 /* Badge contador de filtros activos */
@@ -423,7 +423,7 @@ body {
     margin-left: 4px;
 }
 
-/* Toast de confirmación (reemplaza el alert) */
+/* Toast */
 .filter-toast {
     position: fixed;
     bottom: 90px;
