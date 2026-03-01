@@ -143,7 +143,7 @@ function goToHome() {
 
 function goToSearch() {
     updateActiveNav(1);
-    navigateTo('buscarcuarto');
+    navigateTo('buscar');
 }
 
 function goToPublish() {
