@@ -143,6 +143,14 @@ function publicarCuarto() {
         return;
     }
 
+    // Validar zona
+    const zona = document.getElementById('zona').value;
+    if (!zona) {
+        alert('⚠️ Debes seleccionar una zona');
+        return;
+    }
+
+
     // Recopilar datos
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
     
@@ -156,6 +164,15 @@ function publicarCuarto() {
     const disponibilidad = document.querySelector('input[name="disponibilidad"]:checked').value;
     const fecha = document.getElementById('fecha').value;
 
+    const barrio = document.getElementById('barrio').value;
+    const zonaLabels = {
+        norte: 'Zona Norte',
+        sur: 'Zona Sur',
+        este: 'Zona Este',
+        oeste: 'Zona Oeste',
+        centro: 'Centro'
+    };
+
     const data = {
         fotos: photos,
         tipo,
@@ -164,6 +181,11 @@ function publicarCuarto() {
         cercaDe,
         precio,
         reglas,
+        zona,
+        barrio,
+        ubicacion: barrio 
+            ? `${zonaLabels[zona]}, ${barrio}` 
+            : zonaLabels[zona],
         disponibilidad: disponibilidad === 'fecha' ? fecha : 'inmediata'
     };
 

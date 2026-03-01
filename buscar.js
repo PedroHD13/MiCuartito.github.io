@@ -108,20 +108,20 @@ function loadRooms() {
     // Intentar cargar cuartos publicados del localStorage
     const storedRooms = JSON.parse(localStorage.getItem('cuartos') || '[]');
     
-    // Combinar cuartos de ejemplo con los publicados
+    // Combinar cuartos de ejemplo con los publicados    
     allRooms = [...sampleRooms, ...storedRooms.map((room, index) => ({
-        id: 100 + index,
-        title: `Cuarto ${room.tipo}`,
-        location: "Ubicación por definir",
-        price: parseInt(room.precio),
-        type: room.tipo,
-        bathroom: room.servicios.includes('baño privado') ? 'privado' : 'compartido',
-        furnished: room.servicios.includes('muebles'),
-        capacity: parseInt(room.capacidad) || 1,
-        services: room.servicios,
-        image: room.fotos[0] || "https://via.placeholder.com/400x300/2563a8/ffffff?text=Cuarto"
+    id: 100 + index,
+    title: `Cuarto ${room.tipo} - ${room.ubicacion || 'Sin ubicación'}`,
+    location: room.ubicacion || 'Ubicación por definir',
+    price: parseInt(room.precio),
+    type: room.tipo,
+    bathroom: room.servicios.includes('baño privado') ? 'privado' : 'compartido',
+    furnished: room.servicios.includes('muebles'),
+    capacity: parseInt(room.capacidad) || 1,
+    services: room.servicios,
+    image: room.fotos[0] || "https://via.placeholder.com/400x300/2563a8/ffffff?text=Cuarto"
     }))];
-    
+
     renderRooms(allRooms);
 }
 
