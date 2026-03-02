@@ -135,7 +135,6 @@ function toggleUniversidades(element) {
 }
 
 function publicarCuarto() {
-    const form = document.getElementById('publish-form');
     
     // Validar que tenga al menos una foto
     if (photos.length === 0) {
@@ -163,29 +162,27 @@ function publicarCuarto() {
         alert('⚠️ Debes seleccionar una zona');
         return;
     }
-    // Validar que si marcó universidad, seleccione cuál
+
+    // Recopilar datos PRIMERO
+    const tipo = document.querySelector('input[name="tipo"]:checked').value;
+    const servicios = Array.from(document.querySelectorAll('input[name="servicios"]:checked'))
+        .map(s => s.value);
+    const cercaDe = Array.from(document.querySelectorAll('input[name="cercaDe"]:checked'))
+        .map(s => s.value);
+    const universidadSelect = document.getElementById('universidad-select');
+    const universidadCercana = universidadSelect.value || null;
+
+    // Validar universidad DESPUÉS de declarar cercaDe
     if (cercaDe.includes('universidad') && !universidadCercana) {
         alert('⚠️ Por favor selecciona la universidad cercana');
         return;
     }
 
-
-    // Recopilar datos
-    const tipo = document.querySelector('input[name="tipo"]:checked').value;
-    
-    const servicios = Array.from(document.querySelectorAll('input[name="servicios"]:checked'))
-        .map(s => s.value);
-    
-    const cercaDe = Array.from(document.querySelectorAll('input[name="cercaDe"]:checked'))
-        .map(s => s.value);
-    
     const reglas = document.getElementById('reglas').value;
     const disponibilidad = document.querySelector('input[name="disponibilidad"]:checked').value;
     const fecha = document.getElementById('fecha').value;
-    const universidadSelect = document.getElementById('universidad-select');
-    const universidadCercana = universidadSelect.value || null;
-    
     const barrio = document.getElementById('barrio').value;
+
     const zonaLabels = {
         norte: 'Zona Norte',
         sur: 'Zona Sur',
@@ -211,20 +208,17 @@ function publicarCuarto() {
         disponibilidad: disponibilidad === 'fecha' ? fecha : 'inmediata'
     };
 
-    // Guardar en localStorage (simulación de base de datos)
+    // Guardar en localStorage
     let cuartos = JSON.parse(localStorage.getItem('cuartos') || '[]');
     cuartos.push(data);
     localStorage.setItem('cuartos', JSON.stringify(cuartos));
 
-    console.log('Datos del cuarto:', data);
-    
     alert('✅ ¡Cuarto publicado exitosamente!\n\n' +
           'Fotos: ' + photos.length + '\n' +
           'Tipo: ' + tipo + '\n' +
-          'Capacidad: ' + capacidad + ' persona(s)\n' +
+          'Ubicación: ' + (barrio ? `${zonaLabels[zona]}, ${barrio}` : zonaLabels[zona]) + '\n' +
           'Precio: Bs. ' + precio);
     
-    // Redirigir al dashboard después de publicar
     setTimeout(() => {
         window.location.href = 'index.html';
     }, 1500);
