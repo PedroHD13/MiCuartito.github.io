@@ -148,7 +148,7 @@
                     Cerca de..
                 </div>
                 <div class="services-grid">
-                    <label class="service-item" onclick="toggleService(this)">
+                    <label class="service-item" onclick="toggleService(this); toggleUniversidades(this)">
                         <input type="checkbox" name="cercaDe" value="universidad">
                         <span class="service-label">🏫 Universidad</span>
                     </label>
@@ -170,6 +170,40 @@
                     </label>
                 </div>
             </div>
+            
+            <!-- Sub-selector de universidades (oculto por defecto) -->
+            <div id="universidades-container" style="display:none; grid-column: 1 / -1; margin-top: 8px;">
+                <div class="input-group">
+                    <label for="universidad-select" style="font-size:0.85em; color:#666;">
+                        ¿Cerca de qué universidad?
+                    </label>
+                    <select id="universidad-select" style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.9em;">
+                        <option value="">Selecciona la universidad</option>
+                        <optgroup label="Públicas">
+                            <option value="UAGRM">🎓 UAGRM - Universidad Autónoma Gabriel René Moreno</option>
+                            <option value="UPSA-TEC">🎓 UPSA - Universidad Privada de Santa Cruz (Campus Tecnológico)</option>
+                        </optgroup>
+                        <optgroup label="Privadas">
+                            <option value="UPSA">🎓 UPSA - Universidad Privada de Santa Cruz de la Sierra</option>
+                            <option value="UCEBOL">🎓 UCEBOL - Universidad de la Comunidad</option>
+                            <option value="UCB">🎓 UCB - Universidad Católica Boliviana</option>
+                            <option value="UNIPOL">🎓 UNIPOL - Universidad Policial</option>
+                            <option value="UTEPSA">🎓 UTEPSA - Universidad Tecnológica Privada de Santa Cruz</option>
+                            <option value="UNIVALLE">🎓 UNIVALLE - Universidad del Valle</option>
+                            <option value="UNIBOL">🎓 UNIBOL - Universidad Indígena Boliviana</option>
+                            <option value="UNIFRANZ">🎓 UNIFRANZ - Universidad Privada Franz Tamayo</option>
+                            <option value="NUR">🎓 NUR - Universidad Nur</option>
+                            <option value="UDABOL">🎓 UDALBOL - Universidad de Aquino Bolivia</option>
+                            <option value="UNISUR">🎓 UNISUR - Universidad del Sur</option>
+                        </optgroup>
+                        <optgroup label="Técnicas">
+                            <option value="EMI">🎓 EMI - Escuela Militar de Ingeniería</option>
+                            <option value="INFOCAL">🎓 INFOCAL - Instituto de Formación y Capacitación Laboral</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
 
             <!-- Precio -->
             <div class="section">

@@ -120,6 +120,20 @@ function removePhoto(index) {
 // PUBLICAR CUARTO
 // ============================================
 
+function toggleUniversidades(element) {
+    const container = document.getElementById('universidades-container');
+    const checkbox = element.querySelector('input[type="checkbox"]');
+    // Esperar al siguiente tick para que el checkbox ya esté actualizado
+    setTimeout(() => {
+        if (checkbox.checked) {
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+            document.getElementById('universidad-select').value = '';
+        }
+    }, 10);
+}
+
 function publicarCuarto() {
     const form = document.getElementById('publish-form');
     
@@ -149,6 +163,11 @@ function publicarCuarto() {
         alert('⚠️ Debes seleccionar una zona');
         return;
     }
+    // Validar que si marcó universidad, seleccione cuál
+    if (cercaDe.includes('universidad') && !universidadCercana) {
+        alert('⚠️ Por favor selecciona la universidad cercana');
+        return;
+    }
 
 
     // Recopilar datos
@@ -163,7 +182,9 @@ function publicarCuarto() {
     const reglas = document.getElementById('reglas').value;
     const disponibilidad = document.querySelector('input[name="disponibilidad"]:checked').value;
     const fecha = document.getElementById('fecha').value;
-
+    const universidadSelect = document.getElementById('universidad-select');
+    const universidadCercana = universidadSelect.value || null;
+    
     const barrio = document.getElementById('barrio').value;
     const zonaLabels = {
         norte: 'Zona Norte',
@@ -179,6 +200,7 @@ function publicarCuarto() {
         capacidad,
         servicios,
         cercaDe,
+        universidadCercana,
         precio,
         reglas,
         zona,
