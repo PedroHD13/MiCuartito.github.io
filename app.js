@@ -3,15 +3,15 @@ let currentUserType = '';
 
 // Usuarios de prueba
 const demoUsers = {
-    'propietario': { 
-        password: 'propietario123', 
-        type: 'propietario', 
-        name: 'Carlos Propietario' 
+    'propietario': {
+        password: 'propietario123',
+        type: 'propietario',
+        name: 'Carlos Propietario'
     },
-    'inquilino': { 
-        password: 'inquilino123', 
-        type: 'inquilino', 
-        name: 'María Inquilina' 
+    'inquilino': {
+        password: 'inquilino123',
+        type: 'inquilino',
+        name: 'María Inquilina'
     }
 };
 
@@ -38,29 +38,104 @@ function switchTab(tab) {
     document.getElementById(tab).classList.add('active');
 }
 
+function switchTabById(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+        const target = i === 0 ? 'login' : 'register';
+        t.classList.toggle('active', target === tab);
+    });
+    document.querySelectorAll('.form-section').forEach(s => {
+        s.classList.toggle('active', s.id === tab);
+    });
+}
+
 function handleLogin(e) {
     e.preventDefault();
-    const username = document.getElementById('login-email').value;
+    const username = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
 
-    const user = demoUsers[username];
+    // 1) Buscar en usuarios de demo
+    let user = demoUsers[username];
+    if (user && user.password !== password) user = null;
 
-    if (user && user.password === password) {
+    // 2) Buscar en usuarios registrados
+    if (!user) {
+        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+        const reg = registeredUsers[username];
+        if (reg && reg.password === password) {
+            user = reg;
+        }
+    }
+
+    if (user) {
         currentUserType = user.type;
-        // Guardar en localStorage
         localStorage.setItem('currentUser', JSON.stringify(user));
         showDashboard(user);
     } else {
-        alert('❌ Usuario o contraseña incorrectos.\n\nPrueba con:\n• propietario / propietario123\n• inquilino / inquilino123');
+        alert('❌ Usuario o contraseña incorrectos.\n\nPrueba con:\n• propietario / propietario123\n• inquilino / inquilino123\nO usa una cuenta que hayas registrado.');
     }
 }
 
 function handleRegister(e) {
     e.preventDefault();
-    alert('ℹ️ El registro está deshabilitado en la versión demo.\n\nUsa los usuarios de prueba para iniciar sesión.');
+
+    const name = document.getElementById('register-name').value.trim();
+    const username = document.getElementById('register-username').value.trim();
+    const email = document.getElementById('register-email').value.trim();
+    const password = document.getElementById('register-password').value;
+    const role = document.querySelector('input[name="register-role"]:checked').value;
+    const msgEl = document.getElementById('register-msg');
+
+    // ── Validaciones ──────────────────────────────────────────────
+    if (password.length < 6) {
+        showRegisterMsg('❌ La contraseña debe tener al menos 6 caracteres.', 'error');
+        return;
+    }
+
+    // Cargar usuarios registrados existentes
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+
+    if (registeredUsers[username]) {
+        showRegisterMsg('❌ Ese nombre de usuario ya está en uso. Elige otro.', 'error');
+        return;
+    }
+
+    // Verificar correo duplicado
+    const emailExists = Object.values(registeredUsers).some(u => u.email === email);
+    if (emailExists) {
+        showRegisterMsg('❌ Ya existe una cuenta con ese correo electrónico.', 'error');
+        return;
+    }
+
+    // ── Guardar usuario ───────────────────────────────────────────
+    const newUser = { name, username, email, password, type: role };
+    registeredUsers[username] = newUser;
+    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+    showRegisterMsg('✅ ¡Cuenta creada exitosamente! Ya puedes iniciar sesión.', 'success');
+
+    // Limpiar formulario
+    document.getElementById('register-name').value = '';
+    document.getElementById('register-username').value = '';
+    document.getElementById('register-email').value = '';
+    document.getElementById('register-password').value = '';
+
+    // Cambiar a la pestaña de login tras 1.5 s
+    setTimeout(() => {
+        switchTabById('login');
+        document.getElementById('login-email').value = username;
+    }, 1500);
 }
 
+function showRegisterMsg(text, type) {
+    const el = document.getElementById('register-msg');
+    el.textContent = text;
+    el.style.display = 'block';
+    el.className = 'register-msg ' + type;
+}
+
+
 // ============================================
+
 // FUNCIONES DE DASHBOARD
 // ============================================
 
@@ -71,7 +146,7 @@ function showDashboard(user) {
     // Actualizar información del usuario
     document.getElementById('user-name').textContent = user.name;
     document.getElementById('user-avatar').textContent = user.name.charAt(0);
-    
+
     if (user.type === 'propietario') {
         document.getElementById('user-type-display').innerHTML = '🏠 Alquilo Cuarto';
         document.getElementById('propietario-section').classList.add('active');
@@ -129,7 +204,7 @@ function navigateTo(section) {
         'contactos': 'Próximamente: Contactos recibidos',
         'ayuda': 'Próximamente: Ayuda y reglas'
     };
-    
+
     alert(messages[section] || 'Sección en desarrollo');
 }
 
@@ -170,14 +245,14 @@ function updateActiveNav(index) {
     // Determinar qué navegación está visible
     const inquilinoNav = document.getElementById('inquilino-nav');
     const propietarioNav = document.getElementById('propietario-nav');
-    
+
     let activeNav;
     if (inquilinoNav && inquilinoNav.style.display !== 'none') {
         activeNav = inquilinoNav;
     } else if (propietarioNav && propietarioNav.style.display !== 'none') {
         activeNav = propietarioNav;
     }
-    
+
     if (activeNav) {
         activeNav.querySelectorAll('.nav-item').forEach((item, i) => {
             if (i === index) {
@@ -197,18 +272,18 @@ function cerrarSesion() {
     if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
         // Limpiar el usuario guardado
         localStorage.removeItem('currentUser');
-        
+
         // Resetear variables
         currentUserType = '';
-        
+
         // Ocultar dashboard y mostrar login
         document.getElementById('dashboard-screen').classList.remove('active');
         document.getElementById('login-screen').style.display = 'flex';
-        
+
         // Limpiar formulario de login
         document.getElementById('login-email').value = '';
         document.getElementById('login-password').value = '';
-        
+
         // Mostrar mensaje
         alert('✅ Sesión cerrada exitosamente');
     }

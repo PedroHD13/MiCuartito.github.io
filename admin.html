@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin · Micuartito</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+
+<body class="admin-page">
+
+    <!-- HEADER -->
+    <div class="admin-header">
+        <button class="back-btn" onclick="history.back()" title="Volver">←</button>
+        <div class="header-title">
+            <h1>Panel de Administración</h1>
+            <p id="users-count">Cargando usuarios…</p>
+        </div>
+        <button class="btn-icon" onclick="downloadUsers()" title="Descargar TXT">📥</button>
+    </div>
+
+    <!-- BÚSQUEDA Y FILTRO -->
+    <div class="admin-toolbar">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Buscar por nombre, correo o usuario…"
+                oninput="renderTable()">
+        </div>
+        <select id="filter-role" onchange="renderTable()">
+            <option value="">Todos</option>
+            <option value="inquilino">Inquilinos</option>
+            <option value="propietario">Propietarios</option>
+        </select>
+    </div>
+
+    <!-- TABLA DE USUARIOS -->
+    <div class="admin-content">
+        <div id="empty-state" class="empty-state" style="display:none;">
+            <div class="empty-icon">👥</div>
+            <h3>Sin usuarios registrados</h3>
+            <p>Cuando alguien se registre aparecerá aquí.</p>
+        </div>
+
+        <div class="table-wrapper" id="table-wrapper">
+            <table class="users-table" id="users-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Correo</th>
+                        <th>Contraseña</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="users-tbody">
+                    <!-- Filas generadas por JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CONFIRM MODAL -->
+    <div id="modal-overlay" class="modal-overlay" style="display:none;" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-icon">⚠️</div>
+            <h3>¿Eliminar usuario?</h3>
+            <p id="modal-username-text">Esta acción no se puede deshacer.</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="btn-confirm-delete" id="btn-confirm-delete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

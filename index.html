@@ -42,12 +42,13 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Ingresar</button>
-
+                        <!--SACAR ESTO -->
                         <div class="demo-info">
                             <h4>🔐 Usuarios de prueba:</h4>
                             <p><strong>Propietario:</strong> propietario / propietario123</p>
                             <p><strong>Inquilino:</strong> inquilino / inquilino123</p>
                         </div>
+                        <!--SACAR ESTO -->
                     </form>
                 </div>
 
@@ -57,6 +58,12 @@
                         <div class="input-group">
                             <label for="register-name">Nombre Completo</label>
                             <input type="text" id="register-name" placeholder="Juan Pérez" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="register-username">Usuario</label>
+                            <input type="text" id="register-username" placeholder="miusuario" required
+                                autocomplete="off">
                         </div>
 
                         <div class="input-group">
@@ -77,13 +84,23 @@
                             </div>
                         </div>
 
+                        <div class="input-group">
+                            <label>Tipo de cuenta</label>
+                            <div class="role-selector">
+                                <label class="role-option">
+                                    <input type="radio" name="register-role" value="inquilino" checked>
+                                    <span>🔍 Busco Cuarto</span>
+                                </label>
+                                <label class="role-option">
+                                    <input type="radio" name="register-role" value="propietario">
+                                    <span>🏠 Alquilo Cuarto</span>
+                                </label>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Crear Cuenta</button>
 
-                        <div class="demo-info">
-                            <h4>ℹ️ Versión Demo</h4>
-                            <p>El registro está deshabilitado en esta versión demo.</p>
-                            <p>Usa los usuarios de prueba para iniciar sesión.</p>
-                        </div>
+                        <div id="register-msg" class="register-msg" style="display:none;"></div>
                     </form>
                 </div>
             </div>
@@ -226,6 +243,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- Navegación para INQUILINO -->

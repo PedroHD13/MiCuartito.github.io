@@ -1,0 +1,355 @@
+/* ============================================
+   ADMIN PAGE STYLES
+   ============================================ */
+
+body.admin-page {
+    background: #f0f4f8;
+    min-height: 100vh;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+/* ── HEADER ── */
+.admin-header {
+    background: linear-gradient(135deg, #2563a8 0%, #d9764a 100%);
+    padding: 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    color: white;
+}
+
+.admin-header .header-title h1 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin: 0 0 2px;
+}
+
+.admin-header .header-title p {
+    font-size: 0.8em;
+    opacity: 0.85;
+    margin: 0;
+}
+
+.btn-icon {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    flex-shrink: 0;
+}
+
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+/* ── TOOLBAR ── */
+.admin-toolbar {
+    display: flex;
+    gap: 10px;
+    padding: 16px 16px 0;
+}
+
+.search-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 0.95em;
+    pointer-events: none;
+}
+
+.admin-toolbar input[type="text"] {
+    width: 100%;
+    padding: 11px 14px 11px 36px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 0.9em;
+    background: white;
+    transition: border-color 0.25s;
+}
+
+.admin-toolbar input[type="text"]:focus {
+    outline: none;
+    border-color: #2563a8;
+}
+
+.admin-toolbar select {
+    padding: 11px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 0.9em;
+    background: white;
+    cursor: pointer;
+    color: #333;
+    transition: border-color 0.25s;
+    min-width: 120px;
+}
+
+.admin-toolbar select:focus {
+    outline: none;
+    border-color: #2563a8;
+}
+
+/* ── CONTENT ── */
+.admin-content {
+    padding: 16px;
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.empty-icon {
+    font-size: 4em;
+    margin-bottom: 12px;
+}
+
+.empty-state h3 {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    font-size: 0.9em;
+}
+
+/* ── TABLE ── */
+.table-wrapper {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 540px;
+}
+
+.users-table thead tr {
+    background: linear-gradient(135deg, #2563a8 0%, #d9764a 100%);
+    color: white;
+}
+
+.users-table th {
+    padding: 13px 14px;
+    text-align: left;
+    font-size: 0.8em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.users-table td {
+    padding: 13px 14px;
+    font-size: 0.88em;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.users-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.users-table tbody tr:hover {
+    background: #fafbff;
+}
+
+/* index number */
+.td-index {
+    color: #aaa;
+    font-weight: 600;
+    font-size: 0.82em;
+    width: 32px;
+}
+
+/* nombre / username */
+.td-name {
+    font-weight: 600;
+    color: #2563a8;
+}
+
+.td-username {
+    font-family: monospace;
+    font-size: 0.83em;
+    color: #555;
+}
+
+/* password cell */
+.pwd-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pwd-text {
+    font-family: monospace;
+    font-size: 0.85em;
+    letter-spacing: 0.05em;
+    color: #444;
+}
+
+.btn-eye {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 2px 4px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    line-height: 1;
+    width: auto;
+    margin: 0;
+}
+
+.btn-eye:hover {
+    opacity: 1;
+}
+
+/* role badge */
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.role-badge.inquilino {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.role-badge.propietario {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+/* action button */
+.btn-delete {
+    background: #fdecea;
+    color: #c62828;
+    border: 1.5px solid #ef9a9a;
+    border-radius: 8px;
+    padding: 5px 11px;
+    font-size: 0.8em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    width: auto;
+    margin: 0;
+}
+
+.btn-delete:hover {
+    background: #c62828;
+    color: white;
+    border-color: #c62828;
+}
+
+/* ── CONFIRM MODAL ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.modal-icon {
+    font-size: 3em;
+    margin-bottom: 12px;
+}
+
+.modal h3 {
+    font-size: 1.15em;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.modal p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-cancel,
+.btn-confirm-delete {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    width: auto;
+    margin: 0;
+}
+
+.btn-cancel {
+    background: #f0f0f0;
+    color: #444;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+}
+
+.btn-confirm-delete {
+    background: #c62828;
+    color: white;
+}
+
+.btn-confirm-delete:hover {
+    background: #b71c1c;
+    transform: translateY(-1px);
+}

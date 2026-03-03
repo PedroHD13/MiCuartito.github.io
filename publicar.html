@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar Cuarto - Micuartito</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <div class="header publish-header">
@@ -16,7 +18,7 @@
         </div>
     </div>
 
-    <!-- Form -->
+    <!-- Formulario de Publicación -->
     <div class="form-container">
         <form id="publish-form">
             <!-- Fotografías -->
@@ -32,8 +34,9 @@
                         <small>Máximo 6 fotos</small>
                     </div>
                 </div>
-                <input type="file" id="photo-input" accept="image/*" multiple style="display: none;" onchange="handlePhotos(event)">
-                
+                <input type="file" id="photo-input" accept="image/*" multiple style="display: none;"
+                    onchange="handlePhotos(event)">
+
                 <div class="photo-grid" id="photo-grid">
                     <!-- Las fotos se mostrarán aquí -->
                 </div>
@@ -170,18 +173,20 @@
                     </label>
                 </div>
             </div>
-            
+
             <!-- Sub-selector de universidades (oculto por defecto) -->
             <div id="universidades-container" style="display:none; grid-column: 1 / -1; margin-top: 8px;">
                 <div class="input-group">
                     <label for="universidad-select" style="font-size:0.85em; color:#666;">
                         ¿Cerca de qué universidad?
                     </label>
-                    <select id="universidad-select" style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.9em;">
+                    <select id="universidad-select"
+                        style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:0.9em;">
                         <option value="">Selecciona la universidad</option>
                         <optgroup label="Públicas">
                             <option value="UAGRM">🎓 UAGRM - Universidad Autónoma Gabriel René Moreno</option>
-                            <option value="UPSA-TEC">🎓 UPSA - Universidad Privada de Santa Cruz (Campus Tecnológico)</option>
+                            <option value="UPSA-TEC">🎓 UPSA - Universidad Privada de Santa Cruz (Campus Tecnológico)
+                            </option>
                         </optgroup>
                         <optgroup label="Privadas">
                             <option value="UPSA">🎓 UPSA - Universidad Privada de Santa Cruz de la Sierra</option>
@@ -228,7 +233,8 @@
                 </div>
                 <div class="input-group">
                     <label for="reglas">Describe las reglas</label>
-                    <textarea id="reglas" placeholder="Ej: No fumar, no mascotas, horario de visitas hasta las 10pm, etc."></textarea>
+                    <textarea id="reglas"
+                        placeholder="Ej: No fumar, no mascotas, horario de visitas hasta las 10pm, etc."></textarea>
                 </div>
             </div>
 
@@ -285,4 +291,5 @@
 
     <script src="publicar.js"></script>
 </body>
+
 </html>
