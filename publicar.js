@@ -48,8 +48,7 @@ function goToMyRooms() {
 
 function goToProfile() {
     if (confirm('¿Seguro que quieres salir? Se perderán los cambios no guardados.')) {
-        alert('Próximamente: Tu perfil');
-        // window.location.href = 'perfil.html';
+        window.location.href = 'perfil-propietario.html';
     }
 }
 

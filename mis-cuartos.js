@@ -296,7 +296,7 @@ function goToPublish() {
 }
 
 function goToProfile() {
-    alert('Próximamente: Tu perfil');
+    window.location.href = 'perfil-propietario.html';
 }
 
 // ============================================
