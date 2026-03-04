@@ -1,23 +1,32 @@
 // ============================================
 // VERIFICAR AUTENTICACIÓN
+// y CONFIGURAR CLAVE DE PERFIL POR USUARIO
 // ============================================
 
+// Clave única para guardar los datos de perfil
+let profileKey = '';
+
 window.addEventListener('DOMContentLoaded', () => {
-    const savedUser = localStorage.getItem('currentUser');
-    if (!savedUser) {
+    const savedUserStr = localStorage.getItem('currentUser');
+    if (!savedUserStr) {
         alert('⚠️ Debes iniciar sesión primero');
         window.location.href = 'index.html';
         return;
     }
 
-    const user = JSON.parse(savedUser);
+    const user = JSON.parse(savedUserStr);
     if (user.type !== 'propietario') {
         alert('⚠️ Solo los propietarios pueden acceder a esta sección');
         window.location.href = 'index.html';
         return;
     }
 
-    // Cargar datos del perfil
+    // Generar un identificador único para este usuario
+    // Prioridad: username -> email -> type (para usuarios demo)
+    const userId = user.username || user.email || user.type;
+    profileKey = `profileData_${userId}`;
+
+    // Cargar datos del perfil de este usuario
     loadProfile();
 });
 
@@ -33,9 +42,9 @@ let originalProfileData = {};
 // ============================================
 
 function loadProfile() {
-    // Cargar datos guardados del perfil
-    const savedProfile = JSON.parse(localStorage.getItem('profileData') || '{}');
+    // Cargar datos guardados del perfil SOLO de este usuario
     const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+    const savedProfile = JSON.parse(localStorage.getItem(profileKey) || '{}');
     
     // Datos por defecto
     const profileData = {
@@ -142,8 +151,8 @@ function saveProfile() {
         return;
     }
     
-    // Guardar en localStorage
-    localStorage.setItem('profileData', JSON.stringify(profileData));
+    // Guardar en localStorage SOLO para este usuario
+    localStorage.setItem(profileKey, JSON.stringify(profileData));
     
     // Actualizar usuario actual
     const savedUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -170,8 +179,8 @@ function changeAvatar() {
     
     document.getElementById('profile-avatar').textContent = randomAvatar;
     
-    // Guardar
-    const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+    // Guardar SOLO para este usuario
+    const profileData = JSON.parse(localStorage.getItem(profileKey) || '{}');
     profileData.avatar = randomAvatar;
     localStorage.setItem('profileData', JSON.stringify(profileData));
     originalProfileData.avatar = randomAvatar;

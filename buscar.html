@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="buscar-styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <div class="header buscar-header">
@@ -29,15 +31,6 @@
             🎛️ Filtros
             <span class="filter-badge" id="filter-badge" style="display:none;">0</span>
         </button>
-        <button class="filter-btn" id="bathroom-filter" onclick="toggleQuickFilter('bathroom')">
-            🚿 Baño privado
-        </button>
-        <button class="filter-btn" id="furnished-filter" onclick="toggleQuickFilter('furnished')">
-            🛋️ Amoblado
-        </button>
-        <button class="filter-btn" id="wifi-filter" onclick="toggleQuickFilter('wifi')">
-            📶 WiFi
-        </button>
     </div>
 
     <!-- Results Header -->
@@ -59,17 +52,15 @@
     <!-- Filter Modal -->
     <div class="filter-modal" id="filter-modal" onclick="closeFilterModal(event)">
         <div class="filter-content" onclick="event.stopPropagation()">
-            
+
             <div class="filter-scrollable">
                 <div class="filter-header">
                     <h2>Filtros</h2>
                     <div style="display:flex; gap:8px; align-items:center;">
-                        <button class="btn-clear" onclick="clearFilters()" 
-                                style="padding:8px 12px; font-size:0.85em;">
+                        <button class="btn-clear" onclick="clearFilters()" style="padding:8px 12px; font-size:0.85em;">
                             Limpiar
                         </button>
-                        <button class="btn-apply" onclick="applyFilters()" 
-                                style="padding:8px 12px; font-size:0.85em;">
+                        <button class="btn-apply" onclick="applyFilters()" style="padding:8px 12px; font-size:0.85em;">
                             ✅ Aplicar
                         </button>
                         <button class="close-filter" onclick="closeFilterModal()">×</button>
@@ -89,7 +80,8 @@
                 <!-- Zona -->
                 <div class="filter-group">
                     <div class="filter-group-title">📍 Zona</div>
-                    <select style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;" id="zone-select">
+                    <select style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;"
+                        id="zone-select">
                         <option value="">Todas las zonas</option>
                         <option value="norte">Zona Norte</option>
                         <option value="sur">Zona Sur</option>
@@ -151,7 +143,8 @@
                 <!-- Capacidad -->
                 <div class="filter-group">
                     <div class="filter-group-title">👥 Capacidad</div>
-                    <select style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;" id="capacity-select">
+                    <select style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;"
+                        id="capacity-select">
                         <option value="">Cualquier capacidad</option>
                         <option value="1">1 persona</option>
                         <option value="2">2 personas</option>
@@ -163,7 +156,7 @@
 
         </div>
     </div>
-    
+
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <button class="nav-item" onclick="goToHome()">
@@ -186,4 +179,5 @@
 
     <script src="buscar.js"></script>
 </body>
+
 </html>

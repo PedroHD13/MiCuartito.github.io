@@ -2,6 +2,14 @@
 // ADMIN.JS — Panel de usuarios registrados
 // ============================================
 
+// Guard: solo el usuario admin puede entrar
+(function checkAdminAccess() {
+    const saved = localStorage.getItem('currentUser');
+    if (!saved) { window.location.href = 'index.html'; return; }
+    const user = JSON.parse(saved);
+    if (user.type !== 'admin') { window.location.href = 'index.html'; }
+})();
+
 let pendingDeleteUser = null;
 
 // Carga usuarios del localStorage (propios del registro)

@@ -12,6 +12,11 @@ const demoUsers = {
         password: 'inquilino123',
         type: 'inquilino',
         name: 'María Inquilina'
+    },
+    'admin': {
+        password: 'admin123',
+        type: 'admin',
+        name: 'Administrador'
     }
 };
 
@@ -67,11 +72,17 @@ function handleLogin(e) {
     }
 
     if (user) {
+        // Si es admin, redirigir directamente al panel de administración
+        if (user.type === 'admin') {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            window.location.href = 'admin.html';
+            return;
+        }
         currentUserType = user.type;
         localStorage.setItem('currentUser', JSON.stringify(user));
         showDashboard(user);
     } else {
-        alert('❌ Usuario o contraseña incorrectos.\n\nPrueba con:\n• propietario / propietario123\n• inquilino / inquilino123\nO usa una cuenta que hayas registrado.');
+        alert('❌ Usuario o contraseña incorrectos.');
     }
 }
 
